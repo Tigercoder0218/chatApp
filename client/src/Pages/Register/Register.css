@@ -1,0 +1,228 @@
+.Register-main{
+    width: 100%;
+    height: 100vh;
+    gap: 3em;
+    padding: 2em 10em;
+    background: url(../../Assets/CircleBg.svg);
+    /* background: url(../../Assets/blob.gif); */
+    background-color: var(--secondary);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-position: center; */
+    position: fixed;
+    overflow: hidden;
+}
+
+.Register-card{
+    border-radius: 0.5em;
+    background: rgba(0, 39, 70, 0.4);
+    box-shadow: 0 0 30px 0 rgba(0, 39, 70, 0.5);
+    backdrop-filter: blur( 5px );
+    -webkit-backdrop-filter: blur( 2px );
+    z-index: 1;
+    padding: 2em;
+    display: grid;
+    grid-template-areas: "header header"
+    "avatar form""login login";
+    column-gap: 3em;
+}
+
+.Register-Logo{
+    color: var(--white);
+    font-size: 1.6em;
+    z-index: 1;
+    grid-area: header;
+    text-align: center;
+    padding: 0.3em;
+    margin-bottom: 0.5em;
+    height: fit-content;
+}
+
+.Register-XImg{
+    margin-top: -0.2em;
+}
+
+.Register-form{
+    /* background-color: var(--white); */
+    /* padding: 2em; */
+    gap: 1em;
+    grid-area: form;
+    margin-bottom: 2.5em;
+    transition: 0.3s ease-in-out;
+}
+
+.Register-input{
+    background-color: var(--white);
+    min-width: 20em;
+    padding-right: 1em;
+    border-radius: 0.4em;
+    transition: 0.2s ease-in-out;
+}
+
+.Register-input input{
+    width: 100%;
+    padding: 0.5em 1em;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    border-radius: 0.4em;
+}
+
+.Register-input:focus-within{
+    box-shadow: 0 0 15px 0 rgba(204, 204, 204, 0.2);
+}
+
+.Register-input.RegError{
+    border: 2px solid red;
+}
+
+.Register-errorMsg{
+    color: var(--white);
+    background-color: red ;
+    padding: 0.2em 0.6em;
+    border-radius: 0.4em;
+    font-size: 0.8em;
+    width: 100%;
+    justify-content: center;
+}
+
+.Register-showpass{
+    cursor: pointer;
+}
+
+.Register-submit{
+    min-width: 24em;
+    padding: 0.5em;
+    border-radius: 0.4em;
+    border: none;
+    outline: none;
+    background-color: var(--primary);
+    gap: 1em;
+    margin-top: 0.5em;
+    cursor: pointer;
+}
+
+.Register-submit span{
+    color: var(--text);
+    font-size: 1.1em;
+}
+
+.Register-loaderSvg{
+    animation: loader 2s infinite;
+}
+
+@keyframes loader {
+    0%{
+        rotate:0deg;
+    }100%{
+        rotate:360deg;
+    }
+}
+
+.Register-avatar{
+    /* padding: 2em; */
+    grid-area: avatar;
+}
+
+.Register-avatarImg{
+    width: 8em;
+    height: 8em;
+    background-color: var(--grey);
+    border-radius: 100%;
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.Register-avatarImg .AvatarHolder{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.Register-randAvatar{
+    visibility: hidden;
+    width: 2.5em;
+    height: 2.5em;
+    background-color: var(--secondary-alt);
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.Register-setAvatar .Register-input{
+    visibility: hidden;
+    min-width: 12em;
+    background: none;
+    border: 1px solid var(--white);
+    padding-right: 0;
+}
+
+.Register-setAvatar .Register-input input{
+    background: none;
+    color: var(--white);
+    text-align: center;
+}
+
+.Register-setAvatar .Register-input input::placeholder{
+    color: var(--white);
+}
+
+.Register-login{
+    color: var(--text);
+    z-index: 1;
+    grid-area: login;
+}
+
+.Register-login a{
+    color: var(--white);
+    background-color: var(--secondary-alt);
+    text-decoration: none;
+    padding: 0.2em 0.8em;
+    border-radius: 0.3em;
+}
+
+
+/* Mobile Responsive CSS  */
+@media (max-width:750px){
+    .Register-main{
+        margin-top: -3.5em;
+    }
+
+    .Register-main h1{
+        font-size: 1.3em !important;
+        margin: 0;
+    }
+
+    .Register-XImg{
+        margin-top: -0.3em;
+    }
+
+    .Register-card{
+        margin: 0 2em;
+        padding: 1em;
+        display: grid;
+        grid-template-areas: "header""avatar""form""login"!important;
+    }
+
+    .Register-avatar{
+        margin-top: 1em;
+    }
+
+    .Register-form{
+        margin-top: -2em;
+    }
+
+    .Register-input{
+        min-width: 20em;
+    }
+
+    .Register-input input{
+        padding: 1em;
+    }
+
+    .Register-errorMsg{
+        padding: 0.5em;
+    }
+}

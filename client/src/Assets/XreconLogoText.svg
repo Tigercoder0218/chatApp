@@ -1,0 +1,16 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500">
+	<title>XreconLogoText</title>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #00a7e1 } 
+		.t1 { font-size: 350px;fill: #00a7e1;font-weight: 500;font-family: "Poppins-Medium", "Poppins" } 
+	</style>
+	<g id="Logo">
+		<path id="Shape 5" class="s0" d="m249.1 278.5c-48.7 53.4-112.3 93.6-112.3 93.6h-56.4c0 0 105.6-61.8 168.7-154.6 27.7-40.9 42.7-91.1 42.7-91.1h56.4c0 0-38.7 85.7-99.1 152.1z"/>
+		<path id="Shape 4" class="s0" d="m267.6 263.2c51.3 50 85.4 112.1 85.4 112.1l-55-1.3c0 0-30.2-61.8-76.3-114.1-68.1-77.1-166.7-135.9-166.7-135.9 0 0 126.4 55.4 212.6 139.2z"/>
+	</g>
+	<text id="Recon" style="transform: matrix(1,0,0,1,350,371)" >
+		<tspan x="0" y="0" class="t1">R</tspan><tspan  y="0" class="t1">e</tspan><tspan  y="0" class="t1">c</tspan><tspan  y="0" class="t1">o</tspan><tspan  y="0" class="t1">n</tspan><tspan  y="0" class="t1">
+</tspan>
+	</text>
+</svg>

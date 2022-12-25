@@ -1,0 +1,42 @@
+.NotFound-Main{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.NotFound-Header{
+    padding: 1em 2em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.NotFound-Header img{
+    width: auto;
+    height: 60px;
+}
+
+.NotFound-HomeBtn{
+    background-color: var(--primary);
+    padding: 0.3em 1em;
+    border-radius: 0.4em;
+    margin-top: 0.5em;
+    cursor: pointer;
+}
+
+@media (max-width: 750px){
+    .NotFound-Main{
+        height: 100%;
+        gap: 12em;
+    }
+
+    .NotFound-Header img{
+        height: 50px;
+    }
+
+    .NotFound-ImgHolder img{
+        width: 100vw;
+    }
+}

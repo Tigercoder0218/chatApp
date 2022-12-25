@@ -1,0 +1,42 @@
+{
+  "short_name": "XRecon",
+  "name": "XRecon | ChiragChrg",
+  "icons": [
+    {
+      "src": "./Icons/144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./Icons/192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./Icons/384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "./Icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#001220",
+  "background_color": "#001220",
+  "description": "XRecon is a chatting app developed by ChiragChrg. Similar to WhatsApp, Users can text and interact with other users.",
+  "dir": "ltr",
+  "lang": "en",
+  "orientation": "portrait",
+  "display_override": [],
+  "categories": [
+    "entertainment",
+    "social"
+  ],
+  "prefer_related_applications": false
+}

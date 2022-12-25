@@ -1,0 +1,211 @@
+.AddContact-Main{
+    background-color: var(--secondary-alt);
+    width: 100%;
+    height: 100vh;
+}
+
+.AddContact-Header{
+    background-color: var(--secondary);
+    padding: 1em;
+    letter-spacing: 1px;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 2em;
+}
+
+.AddContact-BackBtn{
+    padding: 0.5em;
+    margin-right: 0.5em;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.AddContact-BackBtn:hover{
+    background-color: var(--secondary-alt);
+}
+
+.AddContact-Body{
+    height: 100%;
+    background-color: var(--secondary-alt);
+    padding: 2em;
+    justify-content: flex-start;
+    gap: 5em;
+}
+
+.AddContact-Input{
+    margin-top: 2em;
+    /* margin-bottom: 2em; */
+}
+
+.AddContact-Input input{
+    width: 20em;
+    height: 100%;
+    padding: 0.5em;
+    padding-left: 1em;
+    font-size: 1.1em;
+    border: none;
+    outline: none;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 0.5em 0 0 0.5em;
+}
+
+.AddContact-SearchBtn{
+    height: 100%;
+    background-color: var(--primary);
+    padding: 0.5em;
+    border-radius: 0 0.5em 0.5em 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s ease-in-out;
+}
+
+.AddContact-SearchBtn svg{
+    z-index: 1;
+}
+.AddContact-SearchBtn .pulse{
+    position: absolute;
+    background-color: var(--accent);
+    width: 5em;
+    height: 5em;
+    opacity: 0;
+    z-index: 0;
+    border-radius: 100%;
+    animation: pulse 1.8s infinite;
+}
+
+.AddContact-SearchBtn .pulse:nth-child(2){
+    animation-delay: 0.5s;
+}
+
+@keyframes pulse {
+    0%{
+        opacity: 1;
+        transform: scale(0);
+    }
+    100%{
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+.AddContact-SearchResult{
+    background-color: var(--secondary-light);
+    margin: 0 1em;
+    /* margin-top: 4em; */
+    padding: 1em;
+    border-radius: 0.4em;
+}
+
+.AddContact-UserInfo{
+    padding: 0 1.5em;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.AddContact-UserAvatar{
+    background-color: var(--grey);
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    margin-right: 1em;
+}
+
+.AddContact-UserName{
+    align-items: flex-start;
+    letter-spacing: 1px;
+    width: 15em;
+}
+
+.AddContact-UserName span{
+    font-size: 1.2em;
+}
+
+.AddContact-UserName p{
+    color: var(--grey);
+    font-size: 0.8em;
+}
+
+.AddContact-AddBtn{
+    background-color: var(--primary);
+    padding: 0.2em 0.8em;
+    border-radius: 0.4em;
+    gap: 0.5em;
+    cursor: pointer;
+}
+
+.AddContact-copyUid{
+    gap: 0.5em;
+}
+
+.AddContact-copyUid>span{
+    font-size: 1em;
+    letter-spacing: 1px;
+}
+    
+.AddContact-copyUid input{
+    border: none;
+    outline: none;
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: 0.5em;
+    font-size: 1.1em;
+    width: 16em; 
+    height: 100%;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+.AddContact-copyBtn{
+    padding: 0.5em;
+    cursor: pointer;
+    background-color: var(--primary);
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.AddContact-Social{
+    gap: 3em;
+}
+
+.AddContact-Social a{
+    background-color: var(--secondary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6em;
+    border-radius: 0.5em;
+    transition: 0.3s ease-in-out;
+}
+
+#whatsapp:hover{
+    background-color: #25D366;
+    transform: translateY(-10px);
+}
+
+#facebook:hover{
+    background-color: #4267B2;
+    transform: translateY(-10px);
+}
+
+#twitter:hover{
+    background-color: #1DA1F2;
+    transform: translateY(-10px);
+}
+
+@media (max-width: 750px) {
+    .AddContact-Body{
+        gap: 10em;
+    }
+
+    .AddContact-Input input{
+        padding: 0.8em;
+    }
+
+    .AddContact-SearchBtn{
+        padding: 0.6em;
+    }
+
+}
