@@ -77,8 +77,9 @@ Some features of XRecon include:
 
 To run XRecon on your local machine, follow these steps:
 
-Note: Rebuilt using Vite + React for better performance.
-Note: Make sure you have Node.js and MongoDB installed on your machine.
+Note: 
+- Rebuilt using Vite + React for better performance.
+- Make sure you have Node.js and MongoDB installed on your machine.
 
 1.  Clone the XRecon repository to your local machine using `git clone https://github.com/ChiragChrg/XRecon.git`.
 2.  Navigate to server directory of the project and install the dependencies by running `npm install`.
