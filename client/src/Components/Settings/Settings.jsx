@@ -89,6 +89,16 @@ const Settings = () => {
         }
     }
 
+    // const UpdateAll = async () => {
+    //     console.log("Updating all chats");
+    //     const res = await axios.post("/api/chat/updateAll", {
+    //         cid: "639a209133c745293b051412",
+    //         lastMsg: "Click to start a conversation",
+    //         lastMsgTime: ""
+    //     });
+    //     console.log(res.data);
+    // }
+
     return (
         <div className="Settings-Main">
             <div className="Settings-header flex">

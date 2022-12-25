@@ -11,34 +11,38 @@ import { XreconText, Xrecon } from "../../Assets";
 import { MdSearch, MdOutlineSettings } from "react-icons/md"
 import { FiLogOut } from "react-icons/fi"
 import { TbUserPlus } from "react-icons/tb"
+import { GoSync } from "react-icons/go";
 import { BiUser } from "react-icons/bi"
 
 export default function Sidebar() {
     const [loading, setLoading] = useState(false);
-    const [contacts, setContacts] = useState([]);
+    // const [contacts, setContacts] = useState([]);
     const AvatarRef = useRef();
     const SidbarRef = useRef();
+    const SyncRef = useRef();
 
-    const { user, setOnLogout, socket, forceUpdate } = useContextData();
+    const { user, setOnLogout, socket, forceUpdate, contacts, setContacts } = useContextData();
     const navigate = useNavigate();
 
     useEffect(() => {
+        // console.time("Local");
         let localContacts = JSON.parse(localStorage.getItem('xrecon-user-contacts'));
         if (localContacts) {
-            // console.log("Local Contacts");
             setContacts(localContacts);
+        } else {
+            FetchContacts(user.uid);
         }
-
-        FetchContacts(user.uid);
+        // console.timeEnd("Local");
     }, [user, forceUpdate])
 
     const FetchContacts = async (uid) => {
+        // console.time("Server");
         setLoading(true);
         try {
             const result = await axios.post("/api/getContacts", { userID: uid });
             if (result.data.status) {
-                // console.log("Server Contacts");
                 setContacts(result.data.ContactData);
+                // console.log(result.data.ContactData);
             }
 
             localStorage.setItem('xrecon-user-contacts', JSON.stringify(result.data.ContactData));
@@ -47,6 +51,7 @@ export default function Sidebar() {
             setLoading(false);
             console.log(error);
         }
+        // console.timeEnd("Server");
     }
 
     useEffect(() => {
@@ -74,6 +79,14 @@ export default function Sidebar() {
         toast.success("Copied to clipboard", { position: "top-right" });
     }
 
+    const RefreshContacts = () => {
+        FetchContacts(user.uid);
+        SyncRef.current.children[0].classList.add("SyncActive");
+        setTimeout(() => {
+            SyncRef.current.children[0].classList.remove("SyncActive");
+        }, 400);
+    }
+
     return (
         <div className='Sidebar-Main flex col' ref={SidbarRef}>
             <div className="Sidebar-header flex col">
@@ -97,6 +110,10 @@ export default function Sidebar() {
                     <div className="Sidebar-input flex">
                         <MdSearch size={30} color="var(--grey)" />
                         <input type="text" placeholder="Search Chat" onChange={HandleChatSearch} />
+                    </div>
+
+                    <div className="Sidebar-Refresh" onClick={RefreshContacts} ref={SyncRef}>
+                        <GoSync size={25} color="var(--inherit)" title="Refresh Contacts" />
                     </div>
 
                     {/* <FiFilter size={30} color="var(--grey)" title="Filter Unread" /> */}

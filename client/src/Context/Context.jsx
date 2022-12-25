@@ -5,6 +5,7 @@ export const Context = React.createContext();
 const ContextProvider = (props) => {
     const [user, setUser] = useState({});
     const [token, setToken] = useState('');
+    const [contacts, setContacts] = useState([]);
     const [forceUpdate, setForceUpdate] = useState(0);
     const [onLogout, setOnLogout] = useState(false);
     const socket = useRef();
@@ -15,6 +16,8 @@ const ContextProvider = (props) => {
             setUser,
             token,
             setToken,
+            contacts,
+            setContacts,
             forceUpdate,
             setForceUpdate,
             onLogout,

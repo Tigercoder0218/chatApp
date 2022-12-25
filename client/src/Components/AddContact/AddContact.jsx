@@ -12,7 +12,7 @@ import { BsWhatsapp, BsFacebook, BsTwitter } from "react-icons/bs";
 
 const AddContact = () => {
     const [userResult, setUserResult] = useState(null);
-    const { user, setForceUpdate } = useContextData();
+    const { user, setForceUpdate, setContacts } = useContextData();
     const navigate = useNavigate();
     const { connectID } = useParams();
 
@@ -62,8 +62,16 @@ const AddContact = () => {
             if (result.data.status) {
                 // let data = FetchContacts(user.uid);
                 // setContactData(data);
+                setContacts(prev => [...prev, { _id: userResult._id, username: userResult.username, avatarImg: userResult.avatarImg }]);
+
+                let prevContacts = JSON.parse(localStorage.getItem("xrecon-user-contacts"));
+                prevContacts.push({ _id: userResult._id, username: userResult.username, avatarImg: userResult.avatarImg });
+                localStorage.setItem("xrecon-user-contacts", JSON.stringify(prevContacts));
+
                 toast.success("User Added to Chat 👍");
                 navigate("/");
+            } else {
+                toast.error(result.data?.err || "Something went wrong");
             }
 
         }
@@ -72,7 +80,7 @@ const AddContact = () => {
             toast.error(err.response?.data?.message || "Something went wrong");
         }
 
-        setForceUpdate(prev => prev + 1);
+        // setForceUpdate(prev => prev + 1);
     }
 
     const CopyUserID = () => {

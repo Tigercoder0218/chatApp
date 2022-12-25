@@ -1,15 +1,25 @@
 import './Chatlist.css';
-import { useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useContextData } from "../../hooks/useContextData"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import { BiUser } from "react-icons/bi"
 
 const ChatList = ({ data }) => {
-    const { username, avatarImg } = data;
+    const [contactInfo, setContactInfo] = useState([]);
+    const [sliceLen, setSliceLen] = useState(0);
+    const { username, avatarImg, _id } = data;
+    const { user } = useContextData();
     const AvatarRef = useRef();
+    const LastMsgRef = useRef();
 
     useEffect(() => {
+        const [Info] = user.contacts.filter(contact => contact.cid === _id);
+        setContactInfo(Info);
+
         AvatarRef.current.innerHTML = avatarImg;
-    }, [avatarImg])
+        setSliceLen(LastMsgRef.current.clientWidth / 7.5);
+        // console.log(LastMsgRef.current.clientWidth / 7.5)
+    }, [avatarImg, user])
 
     return (
         <div className='Chatlist-Main'>
@@ -20,11 +30,13 @@ const ChatList = ({ data }) => {
             <div className="Chatlist-info flex col">
                 <div className="Chatlist-userinfo">
                     <span>{username}</span>
-                    <p>11/11/2022</p>
+                    <p>{contactInfo?.lastMsgTime}</p>
                 </div>
-                <div className="Chatlist-prevMsg">
-                    <span>He Said Yo bro!</span>
-                    <MdKeyboardArrowDown size={30} color="var(--grey)" />
+                <div className="Chatlist-prevMsg" ref={LastMsgRef}>
+                    <span>{contactInfo?.lastMsg?.slice(0, sliceLen)}</span>
+                    <div className="Chatlist-opt flex">
+                        <MdKeyboardArrowDown size={30} color="var(--grey)" />
+                    </div>
                 </div>
             </div>
         </div>

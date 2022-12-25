@@ -14,6 +14,7 @@ import { FaSmileWink } from "react-icons/fa"
 import { TbDotsVertical } from "react-icons/tb"
 import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
 import { Xrecon } from "../../Assets";
+import moment from "moment";
 
 const ChatBox = () => {
     const [toggleEmoji, setToggleEmoji] = useState(false);
@@ -21,8 +22,9 @@ const ChatBox = () => {
     const [initialChat, setInitialChat] = useState(false);
     const [messages, setMessages] = useState([]);
     const [deleteMenu, setDeleteMenu] = useState(false);
+    const [msgSent, setMsgSent] = useState(false);
 
-    const { user, setUser, socket } = useContextData();
+    const { user, setUser, socket, setContacts } = useContextData();
     const location = useLocation();
 
     const MsgInputRef = useRef();
@@ -85,6 +87,8 @@ const ChatBox = () => {
         setMessages([...messages, { text: msg, sender: user.uid, createdAt: time }]);
         MsgInputRef.current.value = "";
 
+        setMsgSent(true);
+
         try {
             await axios.post("/api/chat/sendChat", {
                 msg,
@@ -112,6 +116,7 @@ const ChatBox = () => {
             if (result.data.status) {
                 let newContacts = user.contacts.filter(contact => contact !== contactInfo._id);
                 setUser({ ...user, contacts: newContacts });
+                setContacts(newContacts);
 
                 let localContacts = JSON.parse(localStorage.getItem("xrecon-user-contacts"));
                 let newLocalContacts = localContacts.filter(contact => contact.id !== contactInfo._id);
@@ -138,6 +143,29 @@ const ChatBox = () => {
         navigate("profile", { state: { contactInfo } });
     }
 
+    const HandleBackBtn = async () => {
+        let lastMsg = messages[messages.length - 1]?.text;
+        let lastMsgTime = moment().format("DD/MM/YYYY");
+
+        if (msgSent) {
+            await axios.post("/api/chat/updateChat", { userID: user.uid, contactID: contactInfo._id, lastMsg, lastMsgTime });
+
+            let localUser = JSON.parse(localStorage.getItem("xrecon-user-token"));
+            let updatedContacts = localUser.user.contacts.map(contact => {
+                if (contact.cid === contactInfo._id) {
+                    return { ...contact, lastMsg, lastMsgTime }
+                }
+                return contact;
+            });
+            localUser.user.contacts = updatedContacts;
+            localStorage.setItem("xrecon-user-token", JSON.stringify(localUser));
+            setUser(localUser.user);
+            setMsgSent(false);
+        }
+
+        navigate("/");
+    }
+
     return (
         // <div className="ChatBox-main" style={{ height: `${devHeight}px` }}>
         <div className="ChatBox-main">
@@ -155,7 +183,7 @@ const ChatBox = () => {
             </div>}
 
             <div className="ChatBox-header">
-                <div className="ChatBox-BackBtn flex" onClick={() => navigate("/")}>
+                <div className="ChatBox-BackBtn flex" onClick={HandleBackBtn}>
                     <HiOutlineChevronLeft size={25} color="var(--grey)" />
                 </div>
 

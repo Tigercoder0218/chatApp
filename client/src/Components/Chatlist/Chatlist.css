@@ -34,6 +34,7 @@
     width: 100%;
     padding: 0.6em;
     gap: 0.5em;
+    overflow: hidden;
 }
 
 .Chatlist-userinfo{
@@ -61,22 +62,43 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    padding: 0.4em 0;
     position: relative;
 }
 
 .Chatlist-prevMsg span{
     font-size: 0.8em;
     color: var(--grey);
-}
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    left: 0;
+}   
 
-.Chatlist-prevMsg > svg{
+.Chatlist-opt{
+    /* background: radial-gradient(circle, var(--secondary-alt) 50%, transparent 100%); */
     position: absolute;
     right: -1em;
     opacity: 0;
     transition: 0.2s ease-in-out;
 }
 
-.Chatlist-Main:hover .Chatlist-prevMsg > svg{
+.Chatlist-Main:hover .Chatlist-opt{
     right: 0;
     opacity: 1;
+}
+
+@media (max-width: 750px){
+    .Chatlist-Main:hover{
+        background-color: var(--secondary);
+    }
+
+    .Chatlist-Main:hover .Chatlist-opt{
+        opacity: 0;
+    }
+    
+    .Chatlist-info{
+    padding: 0.8em 0.6em;
+    }
 }

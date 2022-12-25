@@ -20,6 +20,9 @@ exports.registerUser = async (req, res) => {
             email,
             password: hashedPassword,
             avatarImg: avatar,
+            contacts: [{
+                cid: "639a209133c745293b051412",
+            }],
         });
 
         res.send({ status: true });
@@ -77,16 +80,17 @@ exports.addUserContacts = async (req, res) => {
     try {
         const user = await User.findById(userID);
         const contactList = user.contacts;
+        // console.log(contactList);
         let contactExists = false;
 
         contactList.map(async (contact) => {
-            if (contact == contactID) {
+            if (contact.cid == contactID) {
                 contactExists = true;
             }
         });
 
         if (!contactExists) {
-            user.contacts.push(contactID);
+            user.contacts.push({ cid: contactID });
             await user.save();
             console.log('Contact added!');
             return res.send({ status: true });
@@ -107,9 +111,11 @@ exports.getUserContacts = async (req, res) => {
     try {
         const user = await User.findById(userID);
         const contacts = user?.contacts;
+        // console.log("contacts", contacts);
         if (!contacts) return res.send({ status: false, err: 'No contacts found!' });
 
-        const ContactData = await User.find({ _id: { $in: contacts } }).select('_id username avatarImg');
+        let contactsArr = contacts.map(contact => contact.cid);
+        const ContactData = await User.find({ _id: { $in: contactsArr } }).select('_id username avatarImg');
 
         res.send({ status: true, ContactData });
     } catch (err) {
@@ -122,7 +128,7 @@ exports.deleteContact = async (req, res) => {
     try {
         const { userID, deleteUID } = req.body;
         const user = await User.findById(userID);
-        user.contacts = user.contacts.filter(contact => contact != deleteUID);
+        user.contacts = user.contacts.filter(contact => contact.cid != deleteUID);
         await user.save();
 
         console.log('Contact deleted!');

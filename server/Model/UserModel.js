@@ -23,8 +23,18 @@ const userSchema = new mongoose.Schema({
         default: "",
     },
     contacts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Users",
+        cid: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Users",
+        },
+        lastMsg: {
+            type: String,
+            default: "Click to start a conversation",
+        },
+        lastMsgTime: {
+            type: String,
+            default: "",
+        }
     }],
     createdAt: {
         type: Date,

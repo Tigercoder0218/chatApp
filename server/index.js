@@ -28,6 +28,7 @@ app.use(cors({
 app.use('/api/', routes);
 app.use('/api/chat', chatRoutes);
 
+mongoose.set("strictQuery", false);
 // mongoose.connect(process.env.MONGO_LOCAL_URL, {
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
