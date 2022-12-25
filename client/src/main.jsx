@@ -6,6 +6,7 @@ import axios from 'axios';
 
 // axios.defaults.baseURL = 'http://192.168.0.102:5000/';
 axios.defaults.baseURL = 'https://xrecon.onrender.com/';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
