@@ -30,7 +30,7 @@ const Login = () => {
 
         try {
             const result = await axios.post('/api/login', { email, password });
-            console.log(result);
+            // console.log(result);
 
             if (result.data.status) {
                 let user = result.data.user;
