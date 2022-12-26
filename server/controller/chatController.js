@@ -8,10 +8,20 @@ exports.SendChat = async (req, res) => {
 
         //IF Other User has not added your contact
         const OtherUser = await UserModel.findById(to);
-        if (!OtherUser.contacts.includes(from)) {
+        let contactExists = false;
+        OtherUser.contacts.map((contact) => {
+            if (contact.cid == from) {
+                contactExists = true;
+            }
+        });
+        if (!contactExists) {
             await UserModel.findByIdAndUpdate(to, { $push: { contacts: { cid: from } } });
             console.log("OtherUser Contact Added");
         }
+
+        // if (!OtherUser.contacts.includes(from)) {
+        //     await UserModel.findByIdAndUpdate(to, { $push: { contacts: { cid: from } } });
+        // }
 
         if (GetChats.length > 0) {
             const newMsg = {
@@ -52,8 +62,10 @@ exports.GetChats = async (req, res) => {
 exports.UpdateChat = async (req, res) => {
     const { userID, contactID, lastMsg, lastMsgTime } = req.body;
     try {
-        const updateContact = await UserModel.findOneAndUpdate({ _id: userID, "contacts.cid": contactID }, { $set: { "contacts.$.lastMsg": lastMsg, "contacts.$.lastMsgTime": lastMsgTime } });
-        res.send({ status: true });
+        await UserModel.findOneAndUpdate({ _id: userID, "contacts.cid": contactID }, { $set: { "contacts.$.lastMsg": lastMsg, "contacts.$.lastMsgTime": lastMsgTime } });
+
+        const user = await UserModel.findById(userID).select('-password');
+        res.send({ status: true, user });
     } catch (err) {
         console.log(err);
         res.send({ status: false, err });

@@ -60,13 +60,12 @@ const AddContact = () => {
             const result = await axios.post("/api/addContact", { userID: user.uid, contactID: userResult._id })
             // console.log(result)
             if (result.data.status) {
-                // let data = FetchContacts(user.uid);
-                // setContactData(data);
-                setContacts(prev => [...prev, { _id: userResult._id, username: userResult.username, avatarImg: userResult.avatarImg }]);
-
-                let prevContacts = JSON.parse(localStorage.getItem("xrecon-user-contacts"));
-                prevContacts.push({ _id: userResult._id, username: userResult.username, avatarImg: userResult.avatarImg });
-                localStorage.setItem("xrecon-user-contacts", JSON.stringify(prevContacts));
+                const res = await axios.post("/api/getContacts", { userID: user.uid });
+                if (res.data.status) {
+                    setContacts(res.data.ContactData);
+                    // console.log("Fetch in AddContacts", res.data.ContactData);
+                    localStorage.setItem('xrecon-user-contacts', JSON.stringify(res.data.ContactData));
+                }
 
                 toast.success("User Added to Chat 👍");
                 navigate("/");

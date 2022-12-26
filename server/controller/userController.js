@@ -62,9 +62,21 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.findUser = async (req, res) => {
+exports.RefreshUser = async (req, res) => {
+    const { userID } = req.body;
     try {
-        const { userID } = req.body;
+        const user = await User.findById(userID).select("-password");
+        res.send({ status: true, user });
+    }
+    catch (err) {
+        console.log(err);
+        res.send({ status: false, err });
+    }
+}
+
+exports.findUser = async (req, res) => {
+    const { userID } = req.body;
+    try {
         const user = await User.findById(userID).select("-password");
         res.send({ status: true, user });
     }
@@ -90,7 +102,7 @@ exports.addUserContacts = async (req, res) => {
         });
 
         if (!contactExists) {
-            user.contacts.push({ cid: contactID });
+            user.contacts.push({ cid: contactID, lastMsg: "Click to start a conversation", lastMsgTime: "" });
             await user.save();
             console.log('Contact added!');
             return res.send({ status: true });
@@ -106,7 +118,6 @@ exports.addUserContacts = async (req, res) => {
 
 exports.getUserContacts = async (req, res) => {
     const { userID } = req.body;
-    let ContactData = [];
 
     try {
         const user = await User.findById(userID);
@@ -115,7 +126,7 @@ exports.getUserContacts = async (req, res) => {
         if (!contacts) return res.send({ status: false, err: 'No contacts found!' });
 
         let contactsArr = contacts.map(contact => contact.cid);
-        const ContactData = await User.find({ _id: { $in: contactsArr } }).select('_id username avatarImg');
+        let ContactData = await User.find({ _id: { $in: contactsArr } }).select('_id username avatarImg');
 
         res.send({ status: true, ContactData });
     } catch (err) {
@@ -125,13 +136,15 @@ exports.getUserContacts = async (req, res) => {
 }
 
 exports.deleteContact = async (req, res) => {
+    const { userID, deleteUID } = req.body;
+    console.log(userID, deleteUID);
+
     try {
-        const { userID, deleteUID } = req.body;
         const user = await User.findById(userID);
         user.contacts = user.contacts.filter(contact => contact.cid != deleteUID);
         await user.save();
 
-        console.log('Contact deleted!');
+        console.log('Contact deleted!', user.contacts);
         return res.send({ status: true });
     }
     catch (err) {

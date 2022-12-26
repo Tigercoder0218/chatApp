@@ -112,15 +112,15 @@ const ChatBox = () => {
 
     const HandleDeleteContact = async () => {
         try {
+            // console.log("Delete Contact", contactInfo._id, user);
             const result = await axios.post("/api/deleteContact", { userID: user.uid, deleteUID: contactInfo._id });
             if (result.data.status) {
-                let newContacts = user.contacts.filter(contact => contact !== contactInfo._id);
-                setUser({ ...user, contacts: newContacts });
-                setContacts(newContacts);
-
-                let localContacts = JSON.parse(localStorage.getItem("xrecon-user-contacts"));
-                let newLocalContacts = localContacts.filter(contact => contact.id !== contactInfo._id);
-                localStorage.setItem("xrecon-user-contacts", JSON.stringify(newLocalContacts));
+                const res = await axios.post("/api/getContacts", { userID: user.uid });
+                if (res.data.status) {
+                    setContacts(res.data.ContactData);
+                    // console.log("Fetch in AddContacts", res.data.ContactData);
+                    localStorage.setItem('xrecon-user-contacts', JSON.stringify(res.data.ContactData));
+                }
 
                 toast.success("Contact Deleted Successfully!");
                 navigate("/");
@@ -148,18 +148,19 @@ const ChatBox = () => {
         let lastMsgTime = moment().format("DD/MM/YYYY");
 
         if (msgSent) {
-            await axios.post("/api/chat/updateChat", { userID: user.uid, contactID: contactInfo._id, lastMsg, lastMsgTime });
+            const res = await axios.post("/api/chat/updateChat", { userID: user.uid, contactID: contactInfo._id, lastMsg, lastMsgTime });
+            let resData = {
+                uid: res.data.user._id,
+                username: res.data.user.username,
+                avatarImg: res.data.user.avatarImg,
+                email: res.data.user.email,
+                contacts: res.data.user.contacts,
+            }
 
             let localUser = JSON.parse(localStorage.getItem("xrecon-user-token"));
-            let updatedContacts = localUser.user.contacts.map(contact => {
-                if (contact.cid === contactInfo._id) {
-                    return { ...contact, lastMsg, lastMsgTime }
-                }
-                return contact;
-            });
-            localUser.user.contacts = updatedContacts;
-            localStorage.setItem("xrecon-user-token", JSON.stringify(localUser));
-            setUser(localUser.user);
+            // console.log("ChatBOX", localUser, resData);
+            localStorage.setItem("xrecon-user-token", JSON.stringify({ token: localUser.token, user: resData }));
+            setUser(resData);
             setMsgSent(false);
         }
 

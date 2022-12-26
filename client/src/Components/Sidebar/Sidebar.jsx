@@ -28,6 +28,7 @@ export default function Sidebar() {
         // console.time("Local");
         let localContacts = JSON.parse(localStorage.getItem('xrecon-user-contacts'));
         if (localContacts) {
+            // console.log("Local Contacts", localContacts);
             setContacts(localContacts);
         } else {
             FetchContacts(user.uid);
@@ -42,10 +43,10 @@ export default function Sidebar() {
             const result = await axios.post("/api/getContacts", { userID: uid });
             if (result.data.status) {
                 setContacts(result.data.ContactData);
-                // console.log(result.data.ContactData);
+                localStorage.setItem('xrecon-user-contacts', JSON.stringify(result.data.ContactData));
+                // console.log("Fetch Contacts", result.data.ContactData);
             }
 
-            localStorage.setItem('xrecon-user-contacts', JSON.stringify(result.data.ContactData));
             setLoading(false);
         } catch (error) {
             setLoading(false);
