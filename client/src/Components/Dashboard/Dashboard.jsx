@@ -3,6 +3,8 @@ import { ChatSVG, Devbase, XreconText } from "../../Assets"
 import { BsGithub } from "react-icons/bs"
 
 const Dashboard = () => {
+    let currYear = new Date().getFullYear();
+
     return (
         <div className='Dashboard-Main'>
             <div className="Dashboard-welcome flex col">
@@ -24,7 +26,7 @@ const Dashboard = () => {
                             <span>GitHub</span>
                         </a>
                     </div>
-                    <p>© Copyright 2022 ChiragChrg</p>
+                    <p>© Copyright 2022 - {currYear} ChiragChrg</p>
                 </div>
             </div>
         </div>
