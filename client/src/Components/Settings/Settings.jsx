@@ -17,6 +17,7 @@ const Settings = () => {
 
     const { user, setUser } = useContextData();
     const navigate = useNavigate();
+    let currYear = new Date().getFullYear();
 
     const SyncRef = useRef();
     const AvatarRef = useRef();
@@ -171,7 +172,8 @@ const Settings = () => {
                     </div>
                 </div>
                 <div className="Settings-Footer">
-                    <p>© Copyright 2022 ChiragChrg</p>
+                    <p>© Copyright 2022 - {currYear} ChiragChrg</p>
+
                 </div>
             </div>
 
